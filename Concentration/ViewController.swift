@@ -9,7 +9,11 @@
 import UIKit
 
 class ViewController: UIViewController {
-    lazy var game = Concentration(numberOfPairsOfCards: (cardButtons.count+1)/2)
+    lazy var game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
+    
+    var numberOfPairsOfCards: Int{
+        return (cardButtons.count + 1) / 2
+    }
     
     var flipCount=0{
         didSet {
@@ -55,10 +59,15 @@ class ViewController: UIViewController {
     var emoji = [Int:String]()
     
     func emoji(for card:Card) -> String {
+//        if emoji[card.identifier] == nil , emojichoices.count > 0 {
+//                let randomIndex = Int( arc4random_uniform(UInt32(emojichoices.count)))
+//                emoji[card.identifier] = emojichoices.remove(at: randomIndex)
+//        }
         if emoji[card.identifier] == nil , emojichoices.count > 0 {
-                let randomIndex = Int( arc4random_uniform(UInt32(emojichoices.count)))
-                emoji[card.identifier] = emojichoices.remove(at: randomIndex)
+            emoji[card.identifier] = emojichoices.remove(at: emojichoices.count.arc4random)
         }
+        //以上代码与下方语句配套Extension等效
+        
 //        if emoji[card.identifier] != nil{
 //            return emoji[card.identifier]!
 //        }
@@ -70,3 +79,14 @@ class ViewController: UIViewController {
     }
 }
 
+extension Int{
+    var arc4random: Int{
+        if self > 0{
+            return Int(arc4random_uniform(UInt32(self)))
+        }else if self < 0{
+            return -Int(arc4random_uniform(UInt32(self)))
+        }else {
+            return 0
+        }
+    }
+}
