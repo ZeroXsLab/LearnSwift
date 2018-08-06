@@ -50,9 +50,8 @@ class Concentration {
         assert(numberOfPairsOfCards > 0,"Concentration.init(at: \(numberOfPairsOfCards):you must have at lease one pair of cards")
         for _ in 0...numberOfPairsOfCards{
             let card = Card()
-            cards+=[card,card]
-        }
-        // TODO: Shuffle the cards
-        // TODO: new game button
+//            cards+=[card,card]
+            cards.insert(card, at: cards.count.arc4random)
+            cards.insert(card, at: cards.count.arc4random)        }
     }
 }
