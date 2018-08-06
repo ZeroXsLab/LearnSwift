@@ -41,7 +41,12 @@ class ViewController: UIViewController {
 //        flipCard(withEmoji: "🤨", on: sender)
 //        print("Hummmm...")
     }
-
+    @IBAction func restartGame(_ sender: UIButton) {
+        game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
+        flipCount = 0
+        updateViewFromModel()
+    }
+    
     func updateViewFromModel() {
         for index in cardButtons.indices{
             let button = cardButtons[index]
