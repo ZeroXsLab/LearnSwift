@@ -32,7 +32,7 @@ class ViewController: UIViewController {
         if let cardNumber=cardButtons.index(of: sender){
             game.chooseCard(at: cardNumber)
             updateViewFromModel();
-            print("cardNumber = \(cardNumber)\t")
+            print("cardNumber = \(cardNumber)\t\(cardButtons[cardNumber].currentTitle!)")
         }else{
             print("the card selected is not in the cardButtons")
         }
@@ -44,6 +44,7 @@ class ViewController: UIViewController {
     @IBAction func restartGame(_ sender: UIButton) {
         game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
         flipCount = 0
+        emojichoices = ["🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼","🐨"]
         updateViewFromModel()
     }
     
