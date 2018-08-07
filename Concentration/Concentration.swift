@@ -34,21 +34,25 @@ class Concentration {
     
     func chooseCard(at index:Int){
         assert(cards.indices.contains(index),"Concentration.chooseCard(at: \(index)):chosen index not in the cards")
+        
         if !cards[index].isMatched {
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
                 if cards[matchIndex].identifier == cards[index].identifier {
                     cards[matchIndex].isMatched = true
                     cards[index].isMatched = true
+                } else if cards[index].beenTouched, matchIndex != index {
+                    cards[index].penalizing = 1
                 }
                 cards[index].isFaceUp = true
             } else {
                 indexOfOneAndOnlyFaceUpCard = index
             }
         }
+        cards[index].beenTouched = true
     }
     init(numberOfPairsOfCards:Int) {
         assert(numberOfPairsOfCards > 0,"Concentration.init(at: \(numberOfPairsOfCards):you must have at lease one pair of cards")
-        for _ in 0...numberOfPairsOfCards{
+        for _ in 0..<numberOfPairsOfCards{
             let card = Card()
 //            cards+=[card,card]
             cards.insert(card, at: cards.count.arc4random)

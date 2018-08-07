@@ -173,13 +173,13 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Flip:0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ntq-2F-S02">
-                                <rect key="frame" x="20" y="584" width="40" height="63"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <rect key="frame" x="20" y="584" width="42" height="63"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eCw-g9-X2d" userLabel="Restart Button">
-                                <rect key="frame" x="169.5" y="602" width="80" height="45"/>
+                                <rect key="frame" x="171.5" y="602" width="80" height="45"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <state key="normal" title="New Game"/>
                                 <connections>
@@ -187,7 +187,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7CB-Wc-0K3">
-                                <rect key="frame" x="106.5" y="609" width="48" height="30"/>
+                                <rect key="frame" x="108.5" y="609" width="48" height="30"/>
                                 <state key="normal" title="Theme">
                                     <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -195,24 +195,33 @@
                                     <action selector="changeTheme:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Q9g-CS-Zne"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score:2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g4u-wt-5bL">
+                                <rect key="frame" x="294" y="614.5" width="59" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zlH-TR-SiJ">
-                                <rect key="frame" x="28" y="445" width="320" height="216"/>
+                                <rect key="frame" x="27.5" y="445" width="320" height="216"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="7CB-Wc-0K3" firstAttribute="top" secondItem="5fu-Qt-BGO" secondAttribute="bottom" constant="33" id="36y-RN-pHm"/>
+                            <constraint firstItem="g4u-wt-5bL" firstAttribute="leading" secondItem="eCw-g9-X2d" secondAttribute="trailing" constant="42.5" id="5i3-E5-KVv"/>
                             <constraint firstItem="7CB-Wc-0K3" firstAttribute="leading" secondItem="Ntq-2F-S02" secondAttribute="trailing" constant="46.5" id="5yK-Hi-Oqu"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="y9y-xk-xDh" secondAttribute="trailing" constant="16" id="Ifd-yk-kn5"/>
                             <constraint firstItem="y9y-xk-xDh" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="L3H-k1-4Vp"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="eCw-g9-X2d" secondAttribute="trailing" constant="5" id="UuM-QG-BqI"/>
                             <constraint firstItem="Ntq-2F-S02" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="VRj-mL-FG5"/>
                             <constraint firstItem="y9y-xk-xDh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="XfF-GW-RbA"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="7CB-Wc-0K3" secondAttribute="bottom" constant="28" id="bGJ-LE-IFm"/>
+                            <constraint firstItem="g4u-wt-5bL" firstAttribute="top" secondItem="5fu-Qt-BGO" secondAttribute="bottom" constant="38.5" id="h14-LG-hsb"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="zlH-TR-SiJ" secondAttribute="bottom" constant="6" id="hEP-Wf-q9S"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="g4u-wt-5bL" secondAttribute="trailing" constant="22" id="ifj-0I-AsC"/>
                             <constraint firstItem="Ntq-2F-S02" firstAttribute="top" secondItem="y9y-xk-xDh" secondAttribute="bottom" constant="8" symbolic="YES" id="jJc-w7-Zpv"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Ntq-2F-S02" secondAttribute="bottom" constant="20" id="jJt-7q-o5H"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="g4u-wt-5bL" secondAttribute="bottom" constant="32" id="o5D-wz-gX0"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="eCw-g9-X2d" secondAttribute="bottom" constant="20" id="ouN-jI-P8H"/>
                             <constraint firstItem="eCw-g9-X2d" firstAttribute="leading" secondItem="7CB-Wc-0K3" secondAttribute="trailing" constant="15" id="pYV-Yy-2Vk"/>
                             <constraint firstItem="eCw-g9-X2d" firstAttribute="top" secondItem="5fu-Qt-BGO" secondAttribute="bottom" constant="26" id="uau-5M-p9n"/>
@@ -221,12 +230,13 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="UuM-QG-BqI"/>
+                                <exclude reference="h14-LG-hsb"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
                         <outlet property="flipCountLabel" destination="Ntq-2F-S02" id="6md-3r-mXc"/>
+                        <outlet property="scoreLabel" destination="g4u-wt-5bL" id="lLS-oK-oOD"/>
                         <outlet property="themePickView" destination="zlH-TR-SiJ" id="3fW-sw-4Re"/>
                         <outletCollection property="cardButtons" destination="f51-z2-Myf" collectionClass="NSMutableArray" id="gtj-sh-Yf6"/>
                         <outletCollection property="cardButtons" destination="cSH-41-10T" collectionClass="NSMutableArray" id="dkY-TZ-QPg"/>
