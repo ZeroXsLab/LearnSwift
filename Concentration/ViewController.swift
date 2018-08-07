@@ -8,7 +8,16 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        themePickView.dataSource = self
+        themePickView.delegate = self
+        themePickView.isHidden = true
+    }
+    
+    
     lazy var game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
     
     var numberOfPairsOfCards: Int{
@@ -21,6 +30,10 @@ class ViewController: UIViewController {
         }
     }
     var emojichoices = ["🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼","🐨"]
+    let theme = ["Animal","Food","Activity"]
+    let emojiArray = [["🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼","🐨"],["🍏","🍊","🍋","🍌","🍉","🍇","🍓","🍈","🍒"],["⚽️","🏀","🏈","⚾️","🎾","🏐","🎱","🏓","🏸"]]
+    var selectTheme = 0
+    
     
     
     @IBOutlet var cardButtons: [UIButton]!
@@ -44,9 +57,16 @@ class ViewController: UIViewController {
     @IBAction func restartGame(_ sender: UIButton) {
         game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
         flipCount = 0
-        emojichoices = ["🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼","🐨"]
+        emojichoices = emojiArray[selectTheme]
         updateViewFromModel()
     }
+    
+    @IBOutlet weak var themePickView: UIPickerView!
+    
+    @IBAction func changeTheme(_ sender: UIButton) {
+        themePickView.isHidden = !themePickView.isHidden
+    }
+    
     
     func updateViewFromModel() {
         for index in cardButtons.indices{
@@ -82,6 +102,30 @@ class ViewController: UIViewController {
 //        }
         //以上代码与下方语句等效
         return emoji[card.identifier] ?? "?"
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return theme.count
+    }
+    
+    //设置选择框中各选项的内容
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return theme[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        print(component)
+        print(row)
+        selectTheme = row
+        themePickView.isHidden = true
+        game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
+        flipCount = 0
+        emojichoices = emojiArray[selectTheme]
+        updateViewFromModel()
     }
 }
 
