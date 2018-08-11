@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class ConcentrationViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +52,14 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var selectTheme = 0
     var emojichoices = ["😀","😆","☺️","😅","😂","🤣","😇","😍","😝"]
     
+    var theme: [String]? {
+        didSet {
+            emojichoices = theme ?? [""]
+            emoji = [:]
+        }
+    }
+    
+    
     @IBOutlet var cardButtons: [UIButton]!
     
     @IBOutlet weak var flipCountLabel: UILabel!
@@ -86,19 +94,21 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     
     func updateViewFromModel() {
-        for index in cardButtons.indices{
-            let button = cardButtons[index]
-            let card=game.cards[index]
-            if card.isFaceUp{
-                button.setTitle(emoji(for:card), for: UIControlState.normal)
-                button.backgroundColor=#colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1)
+        if cardButtons != nil {
+            for index in cardButtons.indices{
+                let button = cardButtons[index]
+                let card=game.cards[index]
+                if card.isFaceUp{
+                    button.setTitle(emoji(for:card), for: UIControlState.normal)
+                    button.backgroundColor=#colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1)
+                }
+                else{
+                    button.setTitle("", for: UIControlState.normal)
+                    button.backgroundColor=card.isMatched ? #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 0) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+    //                scoreCount -= card.isMatched ? 0 : 1
+                }
+    //            print("Debug:\t\(cardButtons[index].currentTitle!)\t\(game.cards[index].identifier)")
             }
-            else{
-                button.setTitle("", for: UIControlState.normal)
-                button.backgroundColor=card.isMatched ? #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 0) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
-//                scoreCount -= card.isMatched ? 0 : 1
-            }
-//            print("Debug:\t\(cardButtons[index].currentTitle!)\t\(game.cards[index].identifier)")
         }
     }
     var emoji = [Int:String]()
