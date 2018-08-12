@@ -56,6 +56,7 @@ class ConcentrationViewController: UIViewController, UIPickerViewDelegate, UIPic
         didSet {
             emojichoices = theme ?? [""]
             emoji = [:]
+            updateViewFromModel()   // Don't forget it
         }
     }
     

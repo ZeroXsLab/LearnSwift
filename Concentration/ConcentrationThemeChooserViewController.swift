@@ -30,6 +30,32 @@ class ConcentrationThemeChooserViewController: UIViewController {
 //        "Animal":"🐶🐱🐭🐹🐰🦊🐻🐼🐨",
 //        "Food":"🍏🍊🍋🍌🍉🍇🍓🍈🥝"]
 
+    @IBAction func changeTheme(_ sender: Any) {
+//        var successFlag = false
+        if let cvc = splitViewDetailConcentrationViewController {
+            if let themeName = (sender as? UIButton)?.currentTitle {
+                var theme: [String] = [""]
+                for item in themeDict {
+                    if item.value.themeName == themeName {
+                        theme = item.value.themeContent
+//                        successFlag = true
+                        cvc.theme = theme
+                        
+                    }
+                }
+            }
+        }
+        else {
+//            if !successFlag {
+                performSegue(withIdentifier: "Choose Theme", sender: sender) // make the food button segue by code
+//            }
+        }
+    }
+    
+    private var splitViewDetailConcentrationViewController: ConcentrationViewController? {
+        return splitViewController?.viewControllers.last as? ConcentrationViewController
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -48,11 +74,12 @@ class ConcentrationThemeChooserViewController: UIViewController {
                     for item in themeDict {
                         if item.value.themeName == themeName {
                             theme = item.value.themeContent
+                            // "Choose Theme" Segue && Got the themeContent which belong to themeName(button's current title)
+                            if let cvc = segue.destination as? ConcentrationViewController {
+                                cvc.theme = theme
                             break
+                            }
                         }
-                    }
-                    if let cvc = segue.destination as? ConcentrationViewController {
-                        cvc.theme = theme
                     }
                 }
             }
