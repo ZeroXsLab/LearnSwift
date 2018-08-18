@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ConcentrationThemeChooserViewController: UIViewController {
+class ConcentrationThemeChooserViewController: UIViewController, UISplitViewControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,13 +26,27 @@ class ConcentrationThemeChooserViewController: UIViewController {
         var themeContent=[""]
     }
     var themeDict:[Int:Theme] = [0:Theme(themeName: "Expression", themeContent: ["😀","😆","☺️","😅","😂","🤣","😇","😍","😝"]),                            1:Theme(themeName: "Animal", themeContent: ["🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼","🐨"]),2:Theme(themeName: "Food", themeContent: ["🍏","🍊","🍋","🍌","🍉","🍇","🍓","🍈","🥝"])]
-//    let themes = ["Expression":"😀😆☺️😅😂🤣😇😍😝",
-//        "Animal":"🐶🐱🐭🐹🐰🦊🐻🐼🐨",
-//        "Food":"🍏🍊🍋🍌🍉🍇🍓🍈🥝"]
 
+    override func awakeFromNib() {
+        splitViewController?.delegate = self
+    }
+    
+    func splitViewController(
+        _ splitViewController: UISplitViewController,
+        collapseSecondary secondaryViewController: UIViewController,
+        onto primaryViewController: UIViewController
+    ) -> Bool {
+        if let cvc = secondaryViewController as? ConcentrationViewController {
+            if cvc.theme == nil {
+                return true
+            }
+        }
+        return false
+    }
+    
     @IBAction func changeTheme(_ sender: Any) {
 //        var successFlag = false
-        if let cvc = splitViewDetailConcentrationViewController {
+        if let cvc = splitViewDetailConcentrationViewController {   // find theme from splitView
             if let themeName = (sender as? UIButton)?.currentTitle {
                 var theme: [String] = [""]
                 for item in themeDict {
@@ -44,6 +58,19 @@ class ConcentrationThemeChooserViewController: UIViewController {
                     }
                 }
             }
+        } else if let cvc = lastSeguedToConcentrationViewController{
+            if let themeName = (sender as? UIButton)?.currentTitle {
+                var theme: [String] = [""]
+                for item in themeDict {
+                    if item.value.themeName == themeName {
+                        theme = item.value.themeContent
+                        //                        successFlag = true
+                        cvc.theme = theme
+                        
+                    }
+                }
+            }
+            navigationController?.pushViewController(cvc, animated: true)   //push theme to navigation stack without segue
         }
         else {
 //            if !successFlag {
@@ -65,6 +92,8 @@ class ConcentrationThemeChooserViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    private var lastSeguedToConcentrationViewController: ConcentrationViewController?
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Choose Theme" {
@@ -77,7 +106,8 @@ class ConcentrationThemeChooserViewController: UIViewController {
                             // "Choose Theme" Segue && Got the themeContent which belong to themeName(button's current title)
                             if let cvc = segue.destination as? ConcentrationViewController {
                                 cvc.theme = theme
-                            break
+                                lastSeguedToConcentrationViewController = cvc
+                                break
                             }
                         }
                     }
@@ -85,5 +115,4 @@ class ConcentrationThemeChooserViewController: UIViewController {
             }
         }
     }
-    
 }
