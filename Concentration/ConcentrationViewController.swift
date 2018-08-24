@@ -8,7 +8,11 @@
 
 import UIKit
 
-class ConcentrationViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class ConcentrationViewController: VCLLoggingViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    override var vclLoggingName: String {
+        return "Game"
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
