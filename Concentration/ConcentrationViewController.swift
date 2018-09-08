@@ -32,7 +32,7 @@ class ConcentrationViewController: VCLLoggingViewController, UIPickerViewDelegat
     lazy var game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
     
     var numberOfPairsOfCards: Int{
-        return (cardButtons.count + 1) / 2
+        return (visibleCardButtons.count + 1) / 2
     }
     
     var flipCount=0{
@@ -52,9 +52,17 @@ class ConcentrationViewController: VCLLoggingViewController, UIPickerViewDelegat
         var themeContent=[""]
     }
     var themeIdentifier = 8
-    var themeDict:[Int:Theme] = [0:Theme(themeName: "Expression", themeContent: ["😀","😆","☺️","😅","😂","🤣","😇","😍","😝"]),1:Theme(themeName: "Animal", themeContent: ["🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼","🐨"]),2:Theme(themeName: "Food", themeContent: ["🍏","🍊","🍋","🍌","🍉","🍇","🍓","🍈","🥝"]),3:Theme(themeName: "Activity", themeContent: ["⚽️","🏀","🏈","⚾️","🎾","🏐","🎱","🏓","🏸"]),4:Theme(themeName: "Travel", themeContent: ["🚗","🚎","🏎","🚓","🚑","🚒","🚐","🚚","🚛"]),5:Theme(themeName: "Object", themeContent: ["⌚️","📱","💻","⌨️","🖥","🖨","🖱","🖲","🕹"]),6:Theme(themeName: "Symbol", themeContent: ["💟","☮️","✝️","☪️","🕉","☸️","✡️","🔯","🕎"]),7:Theme(themeName: "Flag", themeContent: ["🇧🇹","🇧🇫","🇧🇮","🇰🇵","🇬🇶","🇩🇰","🇩🇪","🇹🇱","🇹🇬"])]
+    var themeDict:[Int:Theme] = [
+        0:Theme(themeName: "Expression", themeContent: ["😀","😆","☺️","😅","😂","🤣","😇","😍","😝","🤪","🤨","🧐","🤓"]),
+        1:Theme(themeName: "Animal", themeContent: ["🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼","🐨","🐯","🦁","🐮","🐷"]),
+        2:Theme(themeName: "Food", themeContent: ["🍏","🍊","🍋","🍌","🍉","🍇","🍓","🍈","🥝","🍅","🍆","🥑","🥒"]),
+        3:Theme(themeName: "Activity", themeContent: ["⚽️","🏀","🏈","⚾️","🎾","🏐","🎱","🏓","🏸","🥅","🏒","🏑","🏏"]),
+        4:Theme(themeName: "Travel", themeContent: ["🚗","🚎","🏎","🚓","🚑","🚒","🚐","🚚","🚛","🚜","🛴","🚲","🛵"]),
+        5:Theme(themeName: "Object", themeContent: ["⌚️","📱","💻","⌨️","🖥","🖨","🖱","🖲","🕹","🗜","💽","💾","📼"]),
+        6:Theme(themeName: "Symbol", themeContent: ["💟","☮️","✝️","☪️","🕉","☸️","✡️","🔯","🕎","☯️","☦️","🛐","⛎"]),
+        7:Theme(themeName: "Flag", themeContent: ["🇧🇹","🇧🇫","🇧🇮","🇰🇵","🇬🇶","🇩🇰","🇩🇪","🇹🇱","🇹🇬","🇩🇴","🇩🇲","🇷🇺","🇪🇨"])]
     var selectTheme = 0
-    var emojichoices = ["😀","😆","☺️","😅","😂","🤣","😇","😍","😝"]
+    var emojichoices = ["😀","😆","☺️","😅","😂","🤣","😇","😍","😝","🤪","🤨","🧐","🤓"]
     
     var theme: [String]? {
         didSet {
@@ -67,15 +75,26 @@ class ConcentrationViewController: VCLLoggingViewController, UIPickerViewDelegat
     
     @IBOutlet var cardButtons: [UIButton]!
     
+    private var visibleCardButtons: [UIButton]! {
+        return cardButtons?.filter {
+            !$0.superview!.isHidden
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateViewFromModel()
+    }
+    
     @IBOutlet weak var flipCountLabel: UILabel!
     
     @IBAction func touchCard(_ sender: UIButton) {
         flipCount+=1
-        if let cardNumber=cardButtons.index(of: sender){
+        if let cardNumber=visibleCardButtons.index(of: sender){
             game.chooseCard(at: cardNumber)
             scoreCount -= game.cards[cardNumber].penalizing
             updateViewFromModel();
-            print("cardNumber = \(cardNumber)\t\(game.cards[cardNumber].identifier)\(cardButtons[cardNumber].currentTitle!)")
+            print("cardNumber = \(cardNumber)\t\(game.cards[cardNumber].identifier)\(visibleCardButtons[cardNumber].currentTitle!)")
         }else{
             print("the card selected is not in the cardButtons")
         }
@@ -99,9 +118,9 @@ class ConcentrationViewController: VCLLoggingViewController, UIPickerViewDelegat
     
     
     func updateViewFromModel() {
-        if cardButtons != nil {
-            for index in cardButtons.indices{
-                let button = cardButtons[index]
+        if visibleCardButtons != nil {
+            for index in visibleCardButtons.indices{
+                let button = visibleCardButtons[index]
                 let card=game.cards[index]
                 if card.isFaceUp{
                     button.setTitle(emoji(for:card), for: UIControlState.normal)
@@ -112,7 +131,7 @@ class ConcentrationViewController: VCLLoggingViewController, UIPickerViewDelegat
                     button.backgroundColor=card.isMatched ? #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 0) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
     //                scoreCount -= card.isMatched ? 0 : 1
                 }
-    //            print("Debug:\t\(cardButtons[index].currentTitle!)\t\(game.cards[index].identifier)")
+    //            print("Debug:\t\(visibleCardButtons[index].currentTitle!)\t\(game.cards[index].identifier)")
             }
         }
     }
